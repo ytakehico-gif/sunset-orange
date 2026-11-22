@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>サンセットオレンジ｜作業手順書づくりサポート</title>
-<meta name="description" content="愛知県・岐阜県の中小製造業向けに、作業手順書をお作りします。合同会社サンセットオレンジ。">
+<meta name="description" content="愛知県・岐阜県の組立工場向けに、作業服で現場に入り、作業手順書をお作りします。合同会社サンセットオレンジ。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 <style>
-/* Layout: 夕暮れの工場の屋根並みから始まり、現場の手順書シートを主役にした、左揃えの1ページ */
+/* Layout: 夕暮れの工場から始まり、「現場出身だからできること」→ 手順書の見本と写真のルール → 1日の進め方 → 担当者、の順に読む左揃えの1ページ（案1の色と書体を引き継ぐ） */
 :root {
   --bg: #f3f5f6;
   --surface: #ffffff;
@@ -20,6 +20,11 @@
   --accent: #c94f12;
   --accent-soft: #fbe6d9;
   --on-accent: #ffffff;
+  --ok: #2f6f4f;
+  --ok-soft: #e1efe7;
+  --photo-bg: #d9dfe3;
+  --photo-metal: #8d99a3;
+  --photo-dark: #44515c;
   --dusk-top: #16202b;
   --dusk-mid: #4a3a45;
   --dusk-glow: #e8742a;
@@ -34,27 +39,30 @@
   :root:not([data-theme="light"]) {
     --bg: #141b22; --surface: #1d2630; --band: #19222b; --fg: #e9edf0; --muted: #a3afb9;
     --line: #36434f; --accent: #f08a4b; --accent-soft: #3a2a20; --on-accent: #1a1209;
+    --ok: #7cc79f; --ok-soft: #1f3329; --photo-bg: #2a3540; --photo-metal: #6c7a86; --photo-dark: #a9b5bf;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #141b22; --surface: #1d2630; --band: #19222b; --fg: #e9edf0; --muted: #a3afb9;
   --line: #36434f; --accent: #f08a4b; --accent-soft: #3a2a20; --on-accent: #1a1209;
+  --ok: #7cc79f; --ok-soft: #1f3329; --photo-bg: #2a3540; --photo-metal: #6c7a86; --photo-dark: #a9b5bf;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; }
+img { max-width: 100%; }
 body { background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 16px; line-height: 1.9; }
-h1, h2, h3, p, ul, ol, dl, dd { margin: 0; padding: 0; }
+h1, h2, h3, p, ul, ol, dl, dd, dt, figure { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
 a { color: var(--accent); }
-a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
-.wrap {
-  max-width: 1040px; margin-inline: auto;
+.wrap { max-width: 1040px; margin-inline: auto;
   padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
+  padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 @media (min-width: 720px) {
   .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); }
 }
@@ -65,52 +73,58 @@ a:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 .hero { position: relative; overflow: hidden; color: var(--dusk-text);
   background:
     radial-gradient(70% 90% at 78% 100%, var(--dusk-sun) 0%, var(--dusk-glow) 28%, transparent 68%),
-    linear-gradient(180deg, var(--dusk-top) 0%, var(--dusk-mid) 62%, var(--dusk-glow) 100%);
-}
+    linear-gradient(180deg, var(--dusk-top) 0%, var(--dusk-mid) 62%, var(--dusk-glow) 100%); }
 .hero nav { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 24px; padding-block: 20px; }
 .brand { font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .08em; }
 .hero nav ul { display: flex; flex-wrap: wrap; gap: 0 20px; font-size: 14px; }
 .hero nav a { color: var(--dusk-sub); text-decoration: none; }
 .hero nav a:hover { color: var(--dusk-text); text-decoration: underline; }
-.hero-body { display: grid; gap: 22px; padding-block: 56px 190px; }
+.hero-body { display: grid; gap: 22px; padding-block: 48px 180px; }
 .hero .service { font-size: 15px; letter-spacing: .08em; color: var(--dusk-sub); }
-.hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(34px, 6.2vw, 62px); line-height: 1.4; letter-spacing: .02em; text-wrap: balance; }
+.hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(32px, 5.8vw, 58px); line-height: 1.45; letter-spacing: .02em; text-wrap: balance; max-width: 15em; }
 .hero .lead { max-width: 34em; color: var(--dusk-sub); font-size: 17px; }
-.roofs { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 130px; display: block; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; }
+.facts li { border: 1px solid var(--dusk-sub); color: var(--dusk-text); font-size: 14px; line-height: 1.5; padding: 6px 12px; border-radius: 2px; }
+.facts b { font-family: var(--display); font-size: 18px; margin-right: 2px; }
+.cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
+.slots { font-size: 14px; color: var(--dusk-sub); }
+.roofs { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 120px; display: block; }
 .roofs rect { fill: url(#sawtooth); }
 
-.btn { display: inline-block; justify-self: start; background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none; padding: 13px 26px; border-radius: 3px; line-height: 1.5; }
+.btn { display: inline-block; background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none; padding: 13px 26px; border-radius: 3px; line-height: 1.5; }
 .btn:hover { filter: brightness(1.08); }
 .hero .btn { background: var(--dusk-text); color: var(--dusk-roof); }
 
-/* 共通の区切り */
+/* 共通 */
 section { padding-block: 72px; }
 section.alt { background: var(--band); }
 h2 { font-family: var(--display); font-weight: 700; font-size: clamp(25px, 3.6vw, 34px); line-height: 1.5; letter-spacing: .02em; text-wrap: balance; }
 .head { display: grid; gap: 12px; margin-bottom: 36px; max-width: 40em; }
 .head p { color: var(--muted); }
+.eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .1em; color: var(--accent); }
 
 /* お悩み */
-.pains { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.pains { display: grid; border-top: 1px solid var(--line); }
 .pains li { padding-block: 18px; border-bottom: 1px solid var(--line); font-family: var(--display); font-weight: 500; font-size: clamp(18px, 2.4vw, 22px); line-height: 1.6; }
 
-/* 進まない理由 */
-.reasons { display: grid; gap: 28px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.reasons li { display: grid; gap: 6px; align-content: start; min-width: 0; }
-.reasons h3 { font-size: 17px; font-weight: 700; line-height: 1.6; }
-.reasons p { color: var(--muted); font-size: 15px; }
+/* 現場出身だからできること */
+.strengths { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.strengths li { background: var(--surface); border: 1px solid var(--line); padding: 24px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.strengths .because { font-size: 14px; font-weight: 700; color: var(--accent); }
+.strengths h3 { font-family: var(--display); font-size: 21px; font-weight: 700; line-height: 1.5; }
+.strengths p { color: var(--muted); font-size: 15px; }
 
-/* できること */
-.service-grid { display: grid; gap: 36px; }
-@media (min-width: 900px) { .service-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; align-items: start; } }
-.points { display: grid; gap: 14px; }
-.points li { padding-left: 1.2em; position: relative; }
-.points li::before { content: ""; position: absolute; left: 0; top: .72em; width: .5em; height: .5em; background: var(--accent); }
-.deliver { margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line); display: grid; gap: 4px; }
-.deliver h3 { font-size: 15px; font-weight: 700; }
-.deliver p { color: var(--muted); font-size: 15px; }
+/* 見本 */
+.sample-grid { display: grid; gap: 28px; }
+@media (min-width: 900px) { .sample-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 40px; align-items: start; } }
+.shot { background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.shot svg { display: block; width: 100%; height: auto; }
+.shot figcaption { padding: 10px 16px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); line-height: 1.6; }
+.rules { display: grid; gap: 14px; margin-top: 22px; }
+.rules li { display: grid; grid-template-columns: 1.6em minmax(0, 1fr); gap: 6px; font-size: 15px; }
+.rules li::before { content: "✓"; color: var(--ok); font-weight: 700; }
+.rules b { font-weight: 700; }
 
-/* 手順書の見本シート */
 .sheet { background: var(--surface); border: 1px solid var(--line); min-width: 0; }
 .sheet-title { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); line-height: 1.6; }
 .sheet-title strong { color: var(--fg); font-size: 15px; }
@@ -119,78 +133,120 @@ h2 { font-family: var(--display); font-weight: 700; font-size: clamp(25px, 3.6vw
 .sheet th, .sheet td { border-bottom: 1px solid var(--line); padding: 10px 12px; text-align: left; vertical-align: top; }
 .sheet tr:last-child td { border-bottom: 0; }
 .sheet th { font-size: 12px; font-weight: 700; color: var(--muted); white-space: nowrap; }
-.photo { width: 58px; height: 44px; display: grid; place-items: center; background: var(--band); color: var(--muted); font-size: 11px; }
+.no { font-variant-numeric: tabular-nums; color: var(--muted); }
 .kyusho { color: var(--accent); font-weight: 700; }
 .sheet-note { padding: 10px 16px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); line-height: 1.6; }
 
+/* 書き方 NG→OK */
+.rewrite { margin-top: 48px; display: grid; gap: 16px; }
+.rewrite h3 { font-family: var(--display); font-size: 22px; font-weight: 700; }
+.pairs { display: grid; gap: 12px; }
+.pair { display: grid; gap: 8px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .pair { grid-template-columns: minmax(0, 1fr) 28px minmax(0, 1fr); align-items: stretch; } }
+.ng, .ok { padding: 12px 16px; font-size: 15px; line-height: 1.7; border-radius: 2px; min-width: 0; }
+.ng { background: var(--surface); border: 1px solid var(--line); color: var(--muted); }
+.ok { background: var(--ok-soft); color: var(--fg); }
+.ng::before, .ok::before { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; margin-bottom: 2px; }
+.ng::before { content: "よくある書き方"; }
+.ok::before { content: "現場で伝わる書き方"; color: var(--ok); }
+.arrow { display: none; place-items: center; color: var(--muted); }
+@media (min-width: 720px) { .arrow { display: grid; } }
+
+/* 1日の進め方 */
+.day { display: grid; counter-reset: step; border-top: 1px solid var(--line); }
+.day li { counter-increment: step; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 16px; padding-block: 18px; border-bottom: 1px solid var(--line); }
+.day li::before { content: counter(step); grid-row: span 2; font-family: var(--display); font-weight: 700; font-size: 32px; line-height: 1.2; color: var(--accent); font-variant-numeric: tabular-nums; }
+.day h3 { font-size: 17px; font-weight: 700; line-height: 1.6; }
+.day p { color: var(--muted); font-size: 15px; }
+.day .time { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: .6em; }
+
 /* 料金 */
-.prices { display: grid; gap: 16px; max-width: 480px; }
-.price { background: var(--surface); border: 1px solid var(--line); padding: 24px; display: grid; gap: 4px; align-content: start; }
+.price-grid { display: grid; gap: 24px; }
+@media (min-width: 800px) { .price-grid { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 40px; align-items: start; } }
+.price { background: var(--surface); border: 1px solid var(--line); padding: 24px; display: grid; gap: 4px; }
 .price h3 { font-size: 15px; font-weight: 700; }
 .amount { font-family: var(--display); font-weight: 700; font-size: 38px; line-height: 1.4; font-variant-numeric: tabular-nums; }
 .amount small { font-family: var(--body); font-size: 14px; font-weight: 400; color: var(--muted); }
-.fine { margin-top: 18px; font-size: 14px; color: var(--muted); max-width: 44em; }
+.price .fine { font-size: 14px; color: var(--muted); }
+.includes { display: grid; gap: 10px; }
+.includes li { padding-left: 1.2em; position: relative; }
+.includes li::before { content: ""; position: absolute; left: 0; top: .72em; width: .5em; height: .5em; background: var(--accent); }
 
-/* 進め方 */
-.flow { display: grid; gap: 0; counter-reset: step; }
-.flow li { counter-increment: step; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; padding-block: 16px; border-top: 1px solid var(--line); }
-.flow li:last-child { border-bottom: 1px solid var(--line); }
-.flow li::before { content: "STEP " counter(step); font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--accent); line-height: 2.2; white-space: nowrap; }
+/* ご依頼の流れ */
+.flow { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); counter-reset: f; }
+.flow li { counter-increment: f; background: var(--surface); border: 1px solid var(--line); padding: 16px; display: grid; gap: 4px; align-content: start; min-width: 0; }
+.flow li::before { content: "STEP " counter(f); font-size: 12px; font-weight: 700; letter-spacing: .06em; color: var(--accent); }
 .flow strong { font-weight: 700; }
-.flow span { color: var(--muted); font-size: 15px; margin-left: .8em; }
+.flow span { color: var(--muted); font-size: 14px; }
 
 /* 担当者 */
 .profile { display: grid; gap: 36px; }
-@media (min-width: 800px) { .profile { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 56px; } }
-.name { font-family: var(--display); font-weight: 700; font-size: 24px; margin-bottom: 18px; }
+@media (min-width: 800px) { .profile { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 56px; align-items: start; } }
+.portrait { aspect-ratio: 4 / 5; max-width: 100%; background: var(--photo-bg); border: 1px dashed var(--muted); display: grid; place-items: center; text-align: center; color: var(--muted); font-size: 14px; line-height: 1.7; padding: 16px; }
+.portrait-img { display: block; width: 100%; max-width: 360px; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--line); }
+.name { font-family: var(--display); font-weight: 700; font-size: 26px; }
+.role { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
 .career { display: grid; gap: 18px; border-left: 2px solid var(--accent); padding-left: 18px; }
 .career h3 { font-size: 16px; font-weight: 700; line-height: 1.6; }
 .career p { color: var(--muted); font-size: 15px; }
-.side { display: grid; gap: 22px; align-content: start; min-width: 0; }
-.side h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-.side li, .side p { color: var(--muted); font-size: 15px; }
+.extra { margin-top: 28px; display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.extra h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.extra li { color: var(--muted); font-size: 15px; }
+
+/* よくある質問 */
+.faq { display: grid; border-top: 1px solid var(--line); max-width: 780px; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; padding-block: 16px; font-weight: 700; list-style: none; display: grid; grid-template-columns: 1.6em minmax(0, 1fr); }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::before { content: "Q"; font-family: var(--display); color: var(--accent); }
+.faq details p { padding: 0 0 18px 1.6em; color: var(--muted); font-size: 15px; }
 
 /* 問い合わせ */
 .contact { background: var(--dusk-top); color: var(--dusk-text); }
 .contact h2 { margin-bottom: 12px; }
 .contact p { color: var(--dusk-sub); max-width: 40em; }
-.contact .btn { margin-top: 24px; background: var(--dusk-glow); color: var(--dusk-roof); }
-.contact-info { margin-top: 28px; font-size: 14px; color: var(--dusk-sub); }
+.contact .cta-row { margin-top: 24px; }
+.contact .btn { background: var(--dusk-glow); color: var(--dusk-roof); }
+.contact-info { margin-top: 28px; font-size: 14px; }
 .contact-info span { user-select: all; color: var(--dusk-text); overflow-wrap: anywhere; }
 
-/* コーヒー */
 .coffee { padding-block: 32px; font-size: 14px; color: var(--muted); }
 .coffee h2 { font-family: var(--body); font-size: 14px; font-weight: 700; color: var(--fg); letter-spacing: 0; margin-bottom: 2px; }
 footer { border-top: 1px solid var(--line); padding-block: 16px; font-size: 12px; color: var(--muted); }
 </style>
 </head>
 <body>
-
-
-<div class="notice"><div class="wrap">見本のページです（未公開）。工場の絵は写真に差し替える前の仮のものです。</div></div>
-
 <header class="hero">
   <div class="wrap">
     <nav aria-label="ページ内の案内">
       <span class="brand">合同会社サンセットオレンジ</span>
       <ul>
-        <li><a href="#service">できること</a></li>
+        <li><a href="#strength">できること</a></li>
+        <li><a href="#sample">手順書の見本</a></li>
         <li><a href="#price">料金</a></li>
-        <li><a href="#flow">進め方</a></li>
+        <li><a href="#profile">担当者</a></li>
         <li><a href="#contact">お問い合わせ</a></li>
       </ul>
     </nav>
     <div class="hero-body">
-      <p class="service">作業手順書づくりサポート</p>
-      <h1>ベテランの「頭の中」を、誰でも使える手順書に。</h1>
-      <p class="lead">生産技術20年・海外工場5年の経験で、現場で本当に使われる作業手順書づくりをお手伝いします。</p>
-      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeOeTNs6lK0NZHZTof09Xh5bRHxC28AGHoeVjAPnW7tuNWE7Q/viewform">まずは無料で相談する（オンライン30分）</a>
+      <p class="service">愛知・岐阜の組立工場へ　作業手順書づくりサポート</p>
+      <h1>作業服で現場に入り、ベテランの技を手順書にします。</h1>
+      <p class="lead">事務所で書く手順書ではありません。ラインの横で作業を見て、自分でも手を動かし、作業者の方が明日から使える1枚に仕上げます。</p>
+      <ul class="facts" aria-label="担当者の経験">
+        <li><b>20</b>年 生産技術</li>
+        <li><b>5</b>年 海外工場</li>
+        <li><b>1</b>日で1工程を仕上げ</li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeOeTNs6lK0NZHZTof09Xh5bRHxC28AGHoeVjAPnW7tuNWE7Q/viewform">無料で相談する（オンライン30分）</a>
+        <span class="slots">現場に伺えるのは毎月2社までです</span>
+      </div>
     </div>
   </div>
   <svg class="roofs" aria-hidden="true" preserveAspectRatio="none">
     <defs>
-      <pattern id="sawtooth" width="150" height="130" patternUnits="userSpaceOnUse">
-        <path fill="#10171f" d="M0 130 V62 L104 22 V62 L150 62 V130 Z"/>
+      <pattern id="sawtooth" width="150" height="120" patternUnits="userSpaceOnUse">
+        <path fill="#10171f" d="M0 120 V58 L104 20 V58 L150 58 V120 Z"/>
       </pattern>
     </defs>
     <rect width="100%" height="100%"/>
@@ -200,123 +256,185 @@ footer { border-top: 1px solid var(--line); padding-block: 16px; font-size: 12px
 <main>
   <section>
     <div class="wrap">
-      <div class="head"><h2>こんなお悩みはありませんか</h2></div>
+      <div class="head"><h2>組立の現場で、こんなことはありませんか</h2></div>
       <ul class="pains">
-        <li>やり方が人によって違い、品質がバラつく</li>
-        <li>ベテランが抜けると回らない。新人教育に時間がかかる</li>
-        <li>外国人スタッフに作業がうまく伝わらない</li>
-        <li>手順書はあるが古くて、現場で使われていない</li>
+        <li>ベテランごとに組み方が違い、品質がバラつく</li>
+        <li>新人が一人立ちするまでに、何か月もかかる</li>
+        <li>外国人スタッフに、急所がうまく伝わらない</li>
+        <li>手順書はあるが文字ばかりで、ラインでは開かれていない</li>
       </ul>
+    </div>
+  </section>
+
+  <section id="strength" class="alt">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">現場出身だからできること</p>
+        <h2>書類を作る人ではなく、<br>現場で一緒に手を動かす人です</h2>
+      </div>
+      <ul class="strengths">
+        <li>
+          <p class="because">生産技術20年だから</p>
+          <h3>品質を決める「急所」が分かる</h3>
+          <p>締め付け、はめ合い、はんだ付け。不良の原因になりやすい動作を見つけ、理由と一緒に手順書に書きます。</p>
+        </li>
+        <li>
+          <p class="because">海外工場で5年働いたから</p>
+          <h3>言葉が違っても伝わる書き方ができる</h3>
+          <p>写真と短い文で、一つの動作を一つの文にします。やさしい日本語で、外国人スタッフにも伝わる形にします。</p>
+        </li>
+        <li>
+          <p class="because">自分でも作業してみるから</p>
+          <h3>現場で本当に使われる</h3>
+          <p>書いたあと、実際にその手順で作業してみます。作業者の方にも試してもらい、その日のうちに直します。</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="sample">
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">手順書の見本</p>
+        <h2>写真で見せて、急所に印を付けます</h2>
+        <p>文字を読まなくても、どこを見て何に気をつけるかが分かる手順書にします。</p>
+      </div>
+      <div class="sample-grid">
+        <figure class="shot">
+          <svg viewBox="0 0 400 267" role="img" aria-label="作業者目線の図の例。左手で部品を押さえ、治具の右側に押し当てる場面。当たる所を赤丸と吹き出しで示している">
+            <image href="kigu.png" x="0" y="0" width="400" height="267"/>
+            <path d="M292 50 L282 104" stroke="var(--accent)" stroke-width="3"/>
+            <rect x="200" y="10" width="190" height="42" rx="6" fill="var(--accent)"/>
+            <text x="295" y="37" text-anchor="middle" font-size="16" font-weight="700" fill="var(--on-accent)" font-family="Zen Kaku Gothic New, Hiragino Sans, sans-serif">治具の右側に押し当てる</text>
+          </svg>
+          <figcaption>作業者の目線で撮り、見てほしい所を丸で囲み、吹き出しで急所を書きます（図は架空の例）。</figcaption>
+        </figure>
+        <div style="min-width:0">
+          <figure class="sheet">
+            <figcaption class="sheet-title"><strong>作業手順書のイメージ</strong><span>作業：部品の組み付け（架空の例）</span></figcaption>
+            <div class="sheet-scroll">
+              <table>
+                <thead><tr><th>No</th><th>手順</th><th>急所</th><th>その理由</th></tr></thead>
+                <tbody>
+                  <tr><td class="no">1</td><td>部品を左手で押さえ、治具にセットする</td><td class="kyusho">治具の右側に押し当てる</td><td>位置がずれると穴が合わない</td></tr>
+                  <tr><td class="no">2</td><td>ボルトを手で仮締めする</td><td class="kyusho">最初の2回転は手で回す</td><td>ねじ山を傷めないため</td></tr>
+                  <tr><td class="no">3</td><td>トルクレンチで本締めする</td><td class="kyusho">「カチッ」と鳴るまで締める</td><td>締め付け不足を防ぐため</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="sheet-note">書式は、現場でいま使っているものに合わせます。</p>
+          </figure>
+          <ul class="rules" aria-label="写真のルール">
+            <li><span><b>作業者の目線で撮る。</b>正面からではなく、作業する人に見えている向きで撮ります。</span></li>
+            <li><span><b>見る所を丸で囲む。</b>1枚の写真で伝えることは一つにします。</span></li>
+            <li><span><b>吹き出しは短く。</b>パソコンに入っている機能で付けるので、社内でも直せます。</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rewrite">
+        <h3>書き方も、こう変えます</h3>
+        <div class="pairs">
+          <div class="pair"><p class="ng">ボルトを適切に締める。</p><span class="arrow" aria-hidden="true">→</span><p class="ok">トルクレンチで「カチッ」と鳴るまで締める。</p></div>
+          <div class="pair"><p class="ng">傷に気をつけてください。</p><span class="arrow" aria-hidden="true">→</span><p class="ok">部品は手袋をした手で、側面を持つ。表面に触らない。</p></div>
+          <div class="pair"><p class="ng">部品をセットし、仮締めしてから本締めする。</p><span class="arrow" aria-hidden="true">→</span><p class="ok">一つの動作を一つの文に分ける（セットする／仮締めする／本締めする）。</p></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section class="alt">
     <div class="wrap">
-      <div class="head"><h2>手順書づくりが、<br>社内だけでは進みにくい理由</h2></div>
-      <ul class="reasons">
-        <li><h3>日々の生産が優先になる</h3><p>必要なのは分かっていても、目の前の納期に追われて後回しになりがちです。</p></li>
-        <li><h3>ベテランほど言葉にしにくい</h3><p>体が覚えているコツは、本人にとって当たり前で、書き出すのが難しいものです。</p></li>
-        <li><h3>書いても使われないことがある</h3><p>文字ばかりの手順書は、現場で開かれなくなります。作り方にも慣れが要ります。</p></li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="service">
-    <div class="wrap">
-      <div class="head"><h2>できること</h2><p>現場に1日うかがい、1工程分の作業手順書をお作りします。</p></div>
-      <div class="service-grid">
-        <div>
-          <ul class="points">
-            <li>現場で実際の作業を見て、作業者の方から話を聞きます</li>
-            <li>写真を中心に、品質・安全の「急所」が一目で分かる手順書にまとめます</li>
-            <li>外国人スタッフにも伝わる書き方にします（やさしい日本語・写真・図）</li>
-            <li>作り方のコツもお伝えし、2本目からは社内で作れるようにします</li>
-          </ul>
-          <div class="deliver">
-            <h3>お渡しするもの</h3>
-            <p>60秒程度の繰り返し作業、1工程分の作業手順書（Excel／PowerPointのデータ）</p>
-          </div>
-        </div>
-        <figure class="sheet" style="margin:0">
-          <figcaption class="sheet-title"><strong>作業手順書のイメージ</strong><span>作業：部品の組み付け（架空の例）</span></figcaption>
-          <div class="sheet-scroll">
-            <table>
-              <thead><tr><th>写真</th><th>手順</th><th>急所</th><th>その理由</th></tr></thead>
-              <tbody>
-                <tr><td><div class="photo">写真</div></td><td>部品を治具にセットする</td><td class="kyusho">基準面を奥まで当てる</td><td>位置がずれると穴が合わない</td></tr>
-                <tr><td><div class="photo">写真</div></td><td>ボルトを手で仮締めする</td><td class="kyusho">最初の2回転は手で回す</td><td>ねじ山を傷めないため</td></tr>
-                <tr><td><div class="photo">写真</div></td><td>工具で本締めする</td><td class="kyusho">音が鳴るまで締める</td><td>締め付け不足を防ぐため</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="sheet-note">実際の書式は、現場に合わせて決めます。</p>
-        </figure>
+      <div class="head">
+        <p class="eyebrow">現場での1日</p>
+        <h2>1日で、1工程分の手順書を仕上げます</h2>
+        <p>60秒ほどの繰り返し作業なら、1日で1工程分を仕上げます。</p>
       </div>
-    </div>
-  </section>
-
-  <section id="price" class="alt">
-    <div class="wrap">
-      <div class="head"><h2>料金</h2></div>
-      <div class="prices">
-        <div class="price"><h3>作業手順書づくりサポート</h3><p class="amount">50,000円 <small>／1日（税別）</small></p></div>
-      </div>
-      <p class="fine">交通費込みの料金です（愛知県・岐阜県内）。</p>
-    </div>
-  </section>
-
-  <section id="flow">
-    <div class="wrap">
-      <div class="head"><h2>進め方</h2><p>お話を聞いたうえで、合わないと感じたらお断りいただいて構いません。</p></div>
-      <ol class="flow">
-        <li><div><strong>お問い合わせ</strong></div></li>
-        <li><div><strong>無料ヒアリング</strong><span>オンラインで30分</span></div></li>
-        <li><div><strong>現場で作成</strong><span>1日</span></div></li>
-        <li><div><strong>仕上げ・納品</strong><span>1週間以内</span></div></li>
-        <li><div><strong>1か月後にフォロー</strong></div></li>
+      <ol class="day">
+        <li><h3>作業を見る<span class="time">午前</span></h3><p>ラインの横で、何人かの作業を見比べます。人による違いがどこにあるかを探します。</p></li>
+        <li><h3>作業者の方に聞く</h3><p>「ここはなぜこうするのか」を、ベテランの方から聞き出します。</p></li>
+        <li><h3>作業を分けて、急所を決める</h3><p>作業を動作ごとに分け、品質と安全に効く急所を選びます。</p></li>
+        <li><h3>写真を撮って、手順書にまとめる<span class="time">午後</span></h3><p>作業者の目線で写真を撮り、急所に印を付けてまとめます。</p></li>
+        <li><h3>その手順で作業してみる</h3><p>自分で試し、作業者の方にも試してもらいます。分かりにくい所はその場で直します。</p></li>
       </ol>
     </div>
   </section>
 
+  <section id="price">
+    <div class="wrap">
+      <div class="head"><h2>料金</h2></div>
+      <div class="price-grid">
+        <div class="price">
+          <h3>作業手順書づくりサポート</h3>
+          <p class="amount">50,000円 <small>／1日（税別）</small></p>
+          <p class="fine">交通費込み（愛知県・岐阜県内）</p>
+        </div>
+        <ul class="includes" aria-label="料金に含まれるもの">
+          <li>オンラインでの事前相談（30分・無料）</li>
+          <li>現場での作業観察・聞き取り・写真撮影</li>
+          <li>1工程分の作業手順書（Excel／PowerPointのデータでお渡し）</li>
+          <li>作り方のコツのお伝え（2本目から社内で作れるように）</li>
+          <li>1か月後のフォロー</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <section class="alt">
+    <div class="wrap">
+      <div class="head"><h2>ご依頼の流れ</h2><p>お話を聞いたうえで、合わないと感じたらお断りいただいて構いません。</p></div>
+      <ol class="flow">
+        <li><strong>お問い合わせ</strong><span>フォームから</span></li>
+        <li><strong>無料相談</strong><span>オンラインで30分</span></li>
+        <li><strong>日程と作業を決める</strong><span>対象の工程を選びます</span></li>
+        <li><strong>現場で作成</strong><span>1日</span></li>
+        <li><strong>仕上げ・納品</strong><span>1週間以内</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="profile">
     <div class="wrap">
       <div class="head"><h2>担当者について</h2></div>
       <div class="profile">
-        <div>
+        <img class="portrait-img" src="tantou.jpg" alt="担当の山下 毅彦" width="800" height="1000">
+        <div style="min-width:0">
           <p class="name">山下 毅彦</p>
+          <p class="role">合同会社サンセットオレンジ　生産技術担当</p>
           <div class="career">
-            <div><h3>自動車部品メーカーで生産技術を20年</h3><p>得意分野は、自動機の不具合改善、画像検査装置の選定・導入、工数削減、はんだ付けの品質改善・指導です。</p></div>
-            <div><h3>アメリカ・ミシガン州の工場に5年勤務</h3><p>言葉や習慣の違うスタッフと、ライン立ち上げや作業指導を経験しました。</p></div>
-            <div><h3>いまは、中小製造業の現場の力に</h3><p>これまでの現場経験を、手順書づくりを通じて皆さまの現場で活かします。</p></div>
+            <div><h3>自動車部品メーカーで生産技術を20年</h3><p>自動機の不具合改善、画像検査装置の選定・導入、工数削減、はんだ付けの品質改善と指導を担当してきました。</p></div>
+            <div><h3>アメリカ・ミシガン州の工場に5年</h3><p>言葉や習慣の違うスタッフと、ライン立ち上げや作業指導をしてきました。</p></div>
+            <div><h3>いまは、中小の組立工場の力に</h3><p>現場で身につけたことを、手順書づくりを通じて皆さまの現場で活かします。</p></div>
+          </div>
+          <div class="extra">
+            <div><h3>こんなこともご相談ください</h3><ul><li>治具・工具屋さんを紹介してほしい</li><li>治工具の構想を考えてほしい</li><li>事務作業を減らしたい</li></ul></div>
+            <div><h3>対応について</h3><ul><li>エリア：愛知県・岐阜県</li><li>対応日：平日・土曜</li><li>秘密保持契約（NDA）に対応します</li></ul></div>
           </div>
         </div>
-        <div class="side">
-          <div>
-            <h3>こんなこともご相談ください</h3>
-            <ul>
-              <li>治具・工具屋さんを紹介してほしい</li>
-              <li>治工具の構想を考えてほしい</li>
-              <li>事務作業を減らしたい</li>
-            </ul>
-          </div>
-          <div>
-            <h3>対応について</h3>
-            <ul>
-              <li>エリア：愛知県・岐阜県</li>
-              <li>対応日：平日・土曜</li>
-              <li>秘密保持契約（NDA）に対応します</li>
-            </ul>
-          </div>
-        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="head"><h2>よくあるご質問</h2></div>
+      <div class="faq">
+        <details><summary>写真を撮れない現場でも頼めますか</summary><p>はい。撮影の範囲は事前にご相談します。撮れない所は図やイラストで描きます。</p></details>
+        <details><summary>1日で終わらない作業はどうなりますか</summary><p>事前相談で作業の長さを伺い、何日かかるかをお見積りします。分けて進めることもできます。</p></details>
+        <details><summary>いま使っている手順書の書式に合わせられますか</summary><p>はい。御社の書式に合わせて作ります。書式がなければ、こちらでご用意します。</p></details>
+        <details><summary>秘密は守ってもらえますか</summary><p>秘密保持契約（NDA）を結んでから伺います。写真やデータは納品後にこちらでは残しません。</p></details>
       </div>
     </div>
   </section>
 
   <section id="contact" class="contact">
     <div class="wrap">
-      <h2>お問い合わせ</h2>
-      <p>まずは困っている作業を、お気軽にお聞かせください。オンラインで30分ほど、無料でお話を伺います。</p>
-      <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeOeTNs6lK0NZHZTof09Xh5bRHxC28AGHoeVjAPnW7tuNWE7Q/viewform">お問い合わせフォームを開く</a>
+      <h2>まずは、困っている作業を教えてください</h2>
+      <p>オンラインで30分ほど、無料でお話を伺います。手順書にするか迷っている段階でも構いません。</p>
+      <div class="cta-row">
+        <a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSeOeTNs6lK0NZHZTof09Xh5bRHxC28AGHoeVjAPnW7tuNWE7Q/viewform">お問い合わせフォームを開く</a>
+        <span class="slots">現場に伺えるのは毎月2社までです</span>
+      </div>
       <p class="contact-info">合同会社サンセットオレンジ　担当：山下 毅彦<br>メール：<span>ytakehico@gmail.com</span></p>
     </div>
   </section>
